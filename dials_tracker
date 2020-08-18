@@ -1,0 +1,160 @@
+WITH
+all_canvassers AS (
+SELECT DISTINCT c.canvassed_by_user_id user_id
+FROM my_state_van.contacts_contacts_myc c
+)
+ 
+, one AS (
+SELECT
+	c.canvassed_by_user_id user_id
+	, COUNT (DISTINCT c.contacts_contact_id) dials
+FROM my_state_van.contacts_contacts_myc c
+WHERE
+	c.contact_type_id = 1
+	AND c.state_code = 'CO'
+	AND CASE
+ 		-- case when calls are entered without a time (they are set to midnight EST)
+		WHEN (c.input_type_id = 2 or c.input_type_id = 10) AND to_char(c.datetime_canvassed, 'HH24:MI:SS')='04:00:00'
+ 		-- add 2 hours and convert to mountain time
+    THEN dateadd(hour, 2, convert_timezone('UTC', 'America/Denver', c.datetime_canvassed))::date
+ 		-- otherwise just convert to western time
+    ELSE convert_timezone('UTC', 'America/Denver', c.datetime_canvassed::timestamp) ::date
+ 		-- compare to one day ago
+    END = dateadd(day, -1, convert_timezone('UTC', 'America/Chicago', current_timestamp::timestamp)::date)
+GROUP BY 1
+)
+, two AS (
+SELECT
+	c.canvassed_by_user_id user_id
+	, COUNT (DISTINCT c.contacts_contact_id) dials
+FROM my_state_van.contacts_contacts_myc c
+WHERE
+	c.contact_type_id = 1
+	AND c.state_code = 'CO'
+	AND CASE
+ 		-- case when calls are entered without a time (they are set to midnight EST)
+		WHEN (c.input_type_id = 2 or c.input_type_id = 10) AND to_char(c.datetime_canvassed, 'HH24:MI:SS')='04:00:00'
+ 		-- add 2 hours and convert to mountain time
+    THEN dateadd(hour, 2, convert_timezone('UTC', 'America/Denver', c.datetime_canvassed))::date
+ 		-- otherwise just convert to western time
+    ELSE convert_timezone('UTC', 'America/Denver', c.datetime_canvassed::timestamp) ::date
+ 		-- compare to one day ago
+    END = dateadd(day, -2, convert_timezone('UTC', 'America/Chicago', current_timestamp::timestamp)::date)
+GROUP BY 1
+)
+, three AS (
+SELECT
+	c.canvassed_by_user_id user_id
+	, COUNT (DISTINCT c.contacts_contact_id) dials
+FROM my_state_van.contacts_contacts_myc c
+WHERE
+	c.contact_type_id = 1
+	AND c.state_code = 'CO'
+	AND CASE
+ 		-- case when calls are entered without a time (they are set to midnight EST)
+		WHEN (c.input_type_id = 2 or c.input_type_id = 10) AND to_char(c.datetime_canvassed, 'HH24:MI:SS')='04:00:00'
+ 		-- add 2 hours and convert to mountain time
+    THEN dateadd(hour, 2, convert_timezone('UTC', 'America/Denver', c.datetime_canvassed))::date
+ 		-- otherwise just convert to western time
+    ELSE convert_timezone('UTC', 'America/Denver', c.datetime_canvassed::timestamp) ::date
+ 		-- compare to one day ago
+    END = dateadd(day, -3, convert_timezone('UTC', 'America/Chicago', current_timestamp::timestamp)::date)
+GROUP BY 1
+)
+, four AS (
+SELECT
+	c.canvassed_by_user_id user_id
+	, COUNT (DISTINCT c.contacts_contact_id) dials
+FROM my_state_van.contacts_contacts_myc c
+WHERE
+	c.contact_type_id = 1
+	AND c.state_code = 'CO'
+	AND CASE
+ 		-- case when calls are entered without a time (they are set to midnight EST)
+		WHEN (c.input_type_id = 2 or c.input_type_id = 10) AND to_char(c.datetime_canvassed, 'HH24:MI:SS')='04:00:00'
+ 		-- add 2 hours and convert to mountain time
+    THEN dateadd(hour, 2, convert_timezone('UTC', 'America/Denver', c.datetime_canvassed))::date
+ 		-- otherwise just convert to western time
+    ELSE convert_timezone('UTC', 'America/Denver', c.datetime_canvassed::timestamp) ::date
+ 		-- compare to one day ago
+    END = dateadd(day, -4, convert_timezone('UTC', 'America/Chicago', current_timestamp::timestamp)::date)
+GROUP BY 1
+)
+, five AS (
+SELECT
+	c.canvassed_by_user_id user_id
+	, COUNT (DISTINCT c.contacts_contact_id) dials
+FROM my_state_van.contacts_contacts_myc c
+WHERE
+	c.contact_type_id = 1
+	AND c.state_code = 'CO'
+	AND CASE
+ 		-- case when calls are entered without a time (they are set to midnight EST)
+		WHEN (c.input_type_id = 2 or c.input_type_id = 10) AND to_char(c.datetime_canvassed, 'HH24:MI:SS')='04:00:00'
+ 		-- add 2 hours and convert to mountain time
+    THEN dateadd(hour, 2, convert_timezone('UTC', 'America/Denver', c.datetime_canvassed))::date
+ 		-- otherwise just convert to western time
+    ELSE convert_timezone('UTC', 'America/Denver', c.datetime_canvassed::timestamp) ::date
+ 		-- compare to one day ago
+    END = dateadd(day, -5, convert_timezone('UTC', 'America/Chicago', current_timestamp::timestamp)::date)
+GROUP BY 1
+)
+, six AS (
+SELECT
+	c.canvassed_by_user_id user_id
+	, COUNT (DISTINCT c.contacts_contact_id) dials
+FROM my_state_van.contacts_contacts_myc c
+WHERE
+	c.contact_type_id = 1
+	AND c.state_code = 'CO'
+	AND CASE
+ 		-- case when calls are entered without a time (they are set to midnight EST)
+		WHEN (c.input_type_id = 2 or c.input_type_id = 10) AND to_char(c.datetime_canvassed, 'HH24:MI:SS')='04:00:00'
+ 		-- add 2 hours and convert to mountain time
+    THEN dateadd(hour, 2, convert_timezone('UTC', 'America/Denver', c.datetime_canvassed))::date
+ 		-- otherwise just convert to western time
+    ELSE convert_timezone('UTC', 'America/Denver', c.datetime_canvassed::timestamp) ::date
+ 		-- compare to one day ago
+    END = dateadd(day, -6, convert_timezone('UTC', 'America/Chicago', current_timestamp::timestamp)::date)
+GROUP BY 1
+)
+, seven AS (
+SELECT
+	c.canvassed_by_user_id user_id
+	, COUNT (DISTINCT c.contacts_contact_id) dials
+FROM my_state_van.contacts_contacts_myc c
+WHERE
+	c.contact_type_id = 1
+	AND c.state_code = 'CO'
+	AND CASE
+ 		-- case when calls are entered without a time (they are set to midnight EST)
+		WHEN (c.input_type_id = 2 or c.input_type_id = 10) AND to_char(c.datetime_canvassed, 'HH24:MI:SS')='04:00:00'
+ 		-- add 2 hours and convert to mountain time
+    THEN dateadd(hour, 2, convert_timezone('UTC', 'America/Denver', c.datetime_canvassed))::date
+ 		-- otherwise just convert to western time
+    ELSE convert_timezone('UTC', 'America/Denver', c.datetime_canvassed::timestamp) ::date
+ 		-- compare to one day ago
+    END = dateadd(day, -7, convert_timezone('UTC', 'America/Chicago', current_timestamp::timestamp)::date)
+GROUP BY 1
+)
+
+SELECT
+all_canvassers.user_id
+,CONCAT(u.first_name,CONCAT(' ',u.last_name)) name
+,one.dials dials_one_day_ago
+,two.dials dials_two_days_ago
+,three.dials dials_three_days_ago
+,four.dials dials_four_days_ago
+,five.dials dials_five_days_ago
+,six.dials dials_six_days_ago
+,seven.dials dials_seven_days_ago
+FROM all_canvassers
+LEFT JOIN my_state_van.users u ON all_canvassers.user_id = u.user_id
+LEFT JOIN one ON all_canvassers.user_id = one.user_id
+LEFT JOIN two ON all_canvassers.user_id = two.user_id
+LEFT JOIN three ON all_canvassers.user_id = three.user_id
+LEFT JOIN four ON all_canvassers.user_id = four.user_id
+LEFT JOIN five ON all_canvassers.user_id = five.user_id
+LEFT JOIN six ON all_canvassers.user_id = six.user_id
+LEFT JOIN seven ON all_canvassers.user_id = seven.user_id
+ORDER BY 1,2
